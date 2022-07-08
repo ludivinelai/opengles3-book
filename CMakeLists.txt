@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 2.8.12 )
 project( ES3_Book )
 
 include_directories( External/Include )
@@ -26,5 +26,6 @@ SUBDIRS( Common
          Chapter_14/ParticleSystem
          Chapter_14/ParticleSystemTransformFeedback 
          Chapter_14/Shadows 
-         Chapter_14/TerrainRendering )	
+         Chapter_14/TerrainRendering
+         UserClipPlane )	
 		
