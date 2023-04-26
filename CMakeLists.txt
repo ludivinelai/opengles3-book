@@ -27,5 +27,7 @@ SUBDIRS( Common
          Chapter_14/ParticleSystemTransformFeedback 
          Chapter_14/Shadows 
          Chapter_14/TerrainRendering
-         UserClipPlane )	
+         UserClipPlane
+         gold_skin
+         opengls_book_console)
 		

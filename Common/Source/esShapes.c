@@ -205,6 +205,7 @@ int ESUTIL_API esGenCube ( float scale, GLfloat **vertices, GLfloat **normals,
 
    GLfloat cubeNormals[] =
    {
+      0.0f, 0.0f, -1.0f,
       0.0f, -1.0f, 0.0f,
       0.0f, -1.0f, 0.0f,
       0.0f, -1.0f, 0.0f,
@@ -224,11 +225,10 @@ int ESUTIL_API esGenCube ( float scale, GLfloat **vertices, GLfloat **normals,
       -1.0f, 0.0f, 0.0f,
       -1.0f, 0.0f, 0.0f,
       -1.0f, 0.0f, 0.0f,
-      -1.0f, 0.0f, 0.0f,
       1.0f, 0.0f, 0.0f,
       1.0f, 0.0f, 0.0f,
       1.0f, 0.0f, 0.0f,
-      1.0f, 0.0f, 0.0f,
+      0.0f, 0.0f, 0.0f,
    };
 
    GLfloat cubeTex[] =

@@ -37,6 +37,13 @@ int InitMVP(ESContext *esContext)
    esMatrixLoadIdentity(&perspective);
    esPerspective(&perspective, 60.0f, aspect, 0.1f, 20.0f);
 
+   for (int i = 0; i < 4; i++) {
+       for (int j = 0; j < 4; j++) {
+           esLogMessage("%f ", perspective.m[i][j]);
+       }
+       esLogMessage("\n");
+   }
+
    // Generate a model view matrix to rotate/translate the terrain
    esMatrixLoadIdentity(&modelview);
 
@@ -70,7 +77,7 @@ int Init(ESContext *esContext)
         // "   mat4 u_mvpMatrix = mat4(1.0);           \n"
         "   v_clipDist = dot(vPosition.xyz, u_clipPlane.xyz) +  \n"
         "                u_clipPlane.w;                         \n"
-        "   gl_Position = u_mvpMatrix * vPosition;              \n"
+        "   gl_Position = vPosition;              \n"
         "}";
     const char fShaderStr[] =
         "#version 300 es                            \n"
@@ -125,22 +132,33 @@ void Draw(ESContext *esContext)
     esMatrixLoadIdentity(&userData->mvpMatrix);
 #endif
 
+    GLfloat vVertices[] = { 0.0f,  0.5f, 0.0f,
+                         -0.5f, -0.5f, 0.0f,
+                         0.5f, -0.5f, 0.0f
+    };
+
     glViewport(0, 0, esContext->width, esContext->height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(userData->programObject);
 
+#if 0
     glBindBuffer(GL_ARRAY_BUFFER, userData->positionVBO);
     glVertexAttribPointer(POSITION_LOC, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (const void *)NULL);
     glEnableVertexAttribArray(POSITION_LOC);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, userData->indicesIBO);
-
+#endif
     // Load the MVP matrix
     glUniformMatrix4fv(userData->mvpLoc, 1, GL_FALSE, (GLfloat *)&userData->mvpMatrix.m[0][0]);
 
     glUniform4fv(userData->clipPlaneLoc, 1, userData->clipPlaneVec);
 
-    glDrawElements(GL_TRIANGLES, userData->numIndices, GL_UNSIGNED_INT, (const void *)NULL);
+    //glDrawElements(GL_TRIANGLES, userData->numIndices, GL_UNSIGNED_INT, (const void *)NULL);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
+    glEnableVertexAttribArray(0);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void Shutdown(ESContext *esContext)
